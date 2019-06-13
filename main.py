@@ -87,6 +87,7 @@ class LabelTool():
         			self.cla_can_temp.append(line.strip('\n'))
         #print self.cla_can_temp
         self.classcandidate['values'] = self.cla_can_temp
+        self.classcandidate.bind("<<ComboboxSelected>>", self.setClass)
         self.classcandidate.current(0)
         self.currentLabelclass = self.classcandidate.get() #init
         self.btnclass = Button(self.frame, text = 'ComfirmClass', command = self.setClass)
@@ -154,10 +155,10 @@ class LabelTool():
         self.imageDir = os.path.join(r'./Images', '%03d' %(self.category))
         #print self.imageDir 
         #print self.category
-        self.imageList = glob.glob(os.path.join(self.imageDir, '*.JPG'))
+        self.imageList = glob.glob(os.path.join(self.imageDir, '*.jpb'))
         #print self.imageList
         if len(self.imageList) == 0:
-            print 'No .JPG images found in the specified dir!'
+            print 'No .jpb images found in the specified dir!'
             return
 
         # default to the 1st image in the collection
@@ -175,7 +176,7 @@ class LabelTool():
         print os.path.exists(self.egDir)
         if not os.path.exists(self.egDir):
             return
-        filelist = glob.glob(os.path.join(self.egDir, '*.JPG'))
+        filelist = glob.glob(os.path.join(self.egDir, '*.jpb'))
         self.tmp = []
         self.egList = []
         random.shuffle(filelist)
@@ -308,7 +309,7 @@ class LabelTool():
             self.cur = idx
             self.loadImage()
 
-    def setClass(self):
+    def setClass(self, event):
     	self.currentLabelclass = self.classcandidate.get()
     	print 'set label class to :',self.currentLabelclass
 
